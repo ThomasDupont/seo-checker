@@ -1,0 +1,35 @@
+{
+  "ts-node": {
+    "files": true,
+    "transpileOnly": true,
+    "experimentalResolver": true
+  },
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noEmitOnError": true,
+    "inlineSourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["esnext", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "lib",
+    "target": "es2022",
+    "typeRoots": [
+      "./src/@types",
+      "./node_modules/@types"
+    ],
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.json"
+  ],
+  "exclude": ["node_modules", "src/**/*.spec.ts", "src/**/*.test.ts"]
+}
