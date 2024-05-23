@@ -2,6 +2,7 @@ import chalk from "chalk"
 
 class Global {
   public rootHostName: string | undefined
+  public protocol: string | undefined
   public checkExternal: boolean = false
   public anomalies: string[] = []
   public testedUrls: string[] = []
@@ -11,6 +12,7 @@ class Global {
 
   setUrl(url: string) {
     const { host, protocol } = new URL(url)
+    this.protocol = protocol
     this.rootHostName = `${protocol}//${host}`
   }
 

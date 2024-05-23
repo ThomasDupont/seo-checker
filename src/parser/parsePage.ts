@@ -12,6 +12,8 @@ const avoidExternal = (href: string) => {
 const treatResults = (href: string, link: string) => {
     if (link!.startsWith('http')) {
         return link!
+    } else if (link!.startsWith('//')) {
+        return `${Global.protocol}${link}`
     } else if (link!.startsWith('/')) {
         return `${Global.rootHostName}${link!}`
     } else {
@@ -29,11 +31,11 @@ export class ParseHtml {
     }
 
     getLinksHref() {
-        return this.document.querySelectorAll('a')
-            .map(a => a.getAttribute('href'))
+        const a = this.document.querySelectorAll('a')
+        return a.map(a => a.getAttribute('href'))
             .filter((href, i) => {
                 if (!href) { 
-                    Global.setAnomaly(`href is empty in link index ${i} on page ${this.href}`)
+                    Global.setAnomaly(`href is empty in link ${JSON.stringify(a[i]?.rawAttributes)} on page ${this.href}`)
                     return false
                 }
 
@@ -50,10 +52,13 @@ export class ParseHtml {
     }
 
     getImagesSrc() {
-        return this.document.querySelectorAll('img')
-            .map(img => img.getAttribute('src'))
+        const imgs = this.document.querySelectorAll('img')
+        return imgs.map(img => img.getAttribute('src'))
             .filter((src, i) => {
-                if (!src) Global.setAnomaly(`src is empty in images index ${i} on page ${this.href}`)
+                
+                if (!src) {
+                    Global.setAnomaly(`src is empty in images ${JSON.stringify(imgs[i]?.rawAttributes)} on page ${this.href}`)
+                }
                 return !!src
             })
             .filter((href, i, arr) => arr.indexOf(href) === i)
