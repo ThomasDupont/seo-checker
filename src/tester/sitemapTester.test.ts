@@ -1,6 +1,11 @@
+import global from '../global';
 import { SitemapTester } from '../tester/sitemapTester';
 
 describe('Sitemap tester test', () => {
+    afterEach(() => {
+        global.anomalies = []
+        global.testedUrls = []
+    })
     it('Test parse sitemap index', (done) => {
         SitemapTester.parseSitemap('https://www.lemonde.fr/sitemap_index.xml').then(result => {
             expect(result).toBeDefined()
@@ -9,7 +14,6 @@ describe('Sitemap tester test', () => {
     })
     it('Test parse sitemap urlset', (done) => {
         SitemapTester.parseSitemap('https://www.lemonde.fr/sitemap/articles/1958-04-21.xml').then(result => {
-            console.log(result)
             expect(result).toBeDefined()
             done()
         })
@@ -26,6 +30,12 @@ describe('Sitemap tester test', () => {
         SitemapTester.testSitemap('https://gorde-theme.myshopify.com/sitemap.xml').then(() => {
             const urls = SitemapTester.getUrlsInSitemap()
             expect(urls.length).toBeGreaterThan(0)
+            done()
+        })
+    })
+    it('Should return null for invalid sitemap', (done) => {
+        SitemapTester.parseSitemap('https://www.lemonde.fr/sitemap_wrong.xml').then(result => {
+            expect(result).toBeNull()
             done()
         })
     })

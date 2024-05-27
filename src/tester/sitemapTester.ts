@@ -1,4 +1,5 @@
 import { XMLParser } from "fast-xml-parser"
+import { Effect as T, pipe } from "effect"
 import { getHtml } from "../parser/getHtml"
 import { Sitemap, SitemapIndex, sitemap } from "../@types/program.types";
 import global from "../global";
@@ -12,34 +13,45 @@ export class SitemapTester {
     }
 
     public static async parseRobots(url: string) {
-        try {
-            const robotTxt = await getHtml(url + '/robots.txt')
-            return this.extractSitemaps(robotTxt)
-        } catch (e) {
-            global.setAnomaly(`robots.txt is missing on website ${url}`)
-            return []
-        }
-        
+        return pipe(
+            T.tryPromise(() => getHtml(url + '/robots.txt')),
+            T.map(this.extractSitemaps),
+            T.catchAll(_ => {
+                global.setAnomaly(`robots.txt is missing on website ${url}`)
+                return T.succeed([])
+            }),
+            T.runPromise
+        )
     }
 
     public static async parseSitemap(url: string): Promise<Sitemap | null> {
-        let jObj
-        try {
-            const xml = await getHtml(url)
-            const parser = new XMLParser();
-            jObj = parser.parse(xml);
-        } catch (e) {
-            global.setAnomaly(`sitemap.xml is missing on page or not a valid XML ${url}`)
-            return null
-        }
+        const test1 = await pipe(
+            T.tryPromise(async () => {
+                const xml = await getHtml(url)
+                if (!xml) {
+                    throw new Error('HTML is empty')
+                }
+                const parser = new XMLParser();
+                return parser.parse(xml);
+            }),
+            T.catchAll(_ => {
+                global.setAnomaly(`sitemap.xml is missing on page or not a valid XML ${url}`)
+                return T.succeed(null)
+            }),
+            T.runPromise
+        )
 
-        try {
-            return sitemap.parse(jObj)
-        }
-        catch (e) {
-            global.setAnomaly(`sitemap.xml is not valid on page ${url} : error ${JSON.stringify(e)}`)
-            return null
-        }
+        if (!test1) return null
+
+
+        return pipe(
+            T.try(() => sitemap.parse(test1)),
+            T.catchAll(e => {
+                global.setAnomaly(`sitemap.xml is not valid on page ${url} : error ${JSON.stringify(e)}`)
+                return T.succeed(null)
+            }),
+            T.runPromise
+        )
     }
 
     public static async testSitemap(url: string) {

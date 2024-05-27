@@ -1,9 +1,13 @@
-import { ParseHtml } from './parsePage'
+import { ParseHtml, avoidExternal } from './parsePage'
 import fs from 'fs'
 import path from 'path'
 import global from '../global'
 
 describe('Parse page test', () => {
+    it ('Should avoid external', () => {
+        const external = avoidExternal('https://www.google.com')
+        expect(external).toBe(false)
+    })
     it('Should return the links of the page', done => {
         global.setUrl('https://monformateurindependant.com')
         const html = fs.readFileSync(path.join(__dirname, '../fixtures/good_html.html'), 'utf-8')

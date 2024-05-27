@@ -1,13 +1,17 @@
 import { parse } from 'node-html-parser';
+import { Effect as T, pipe } from 'effect'
 import Global from '../global';
 
-const avoidExternal = (href: string) => {
+export const avoidExternal = (href: string) => {
     if (Global.checkExternal) return true
-
-    try {
-        const url = new URL(href)
-        return `${url.protocol}//${url.host}` === Global.rootHostName
-    } catch (e) { return true }
+    return pipe(
+        T.try(() => {
+            const url = new URL(href)
+            return `${url.protocol}//${url.host}` === Global.rootHostName
+        }),
+        T.catchAll(_ => T.succeed(true)),
+        T.runSync
+    )
 }
 const treatResults = (href: string, link: string) => {
     if (link!.startsWith('http')) {
@@ -42,8 +46,6 @@ export class ParseHtml {
                 if (href.startsWith('#')) return false
                 if (href.startsWith('tel:')) return false
                 if (href.startsWith('mailto:')) return false
-                
-
                 return !!href
             })
             .filter((href, i, arr) => arr.indexOf(href) === i)

@@ -1,3 +1,4 @@
+import { Effect as T } from "effect"
 import { ReturnGetStatusRequest } from "../@types/program.types"
 import global from "../global"
 import { getHtml } from "../parser/getHtml"
@@ -27,7 +28,21 @@ const treatResults = ({links, url, type}: TreatResultsArgs) => (results: Promise
 
 export const pageTester = async (url: string) => {
     global.setTestedUrl(url)
-    const html = await getHtml(url)
+    const html = await T.tryPromise(() => getHtml(url)).pipe(
+        T.catchAll(_ => {
+            global.setAnomaly(`HTML is empty on page ${url}`)
+            return T.succeed(null)
+        }),
+        T.runPromise
+    )
+
+    if (!html) {
+        return {
+            url,
+            goodLinks: [],
+            goodSrc: []
+        }
+    }
     const parser = new ParseHtml(html, url)
 
     const links = parser.getLinksHref()
