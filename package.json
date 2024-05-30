@@ -1,5 +1,5 @@
 {
-  "name": "seo-checker",
+  "name": "seochecker",
   "version": "1.0.0",
   "description": "Anticipate the Google Search Console errors by checking your website for 404 errors, sitemap errors, and more.",
   "license": "MIT",
