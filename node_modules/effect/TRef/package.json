@@ -1,6 +1,0 @@
-{
-  "main": "../dist/cjs/TRef.js",
-  "module": "../dist/esm/TRef.js",
-  "types": "../dist/dts/TRef.d.ts",
-  "sideEffects": []
-}

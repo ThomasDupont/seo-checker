@@ -1,6 +1,0 @@
-{
-  "main": "../dist/cjs/MergeState.js",
-  "module": "../dist/esm/MergeState.js",
-  "types": "../dist/dts/MergeState.d.ts",
-  "sideEffects": []
-}

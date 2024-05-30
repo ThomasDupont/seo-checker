@@ -1,6 +1,0 @@
-{
-  "main": "../dist/cjs/LogLevel.js",
-  "module": "../dist/esm/LogLevel.js",
-  "types": "../dist/dts/LogLevel.d.ts",
-  "sideEffects": []
-}

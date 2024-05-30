@@ -1,6 +1,0 @@
-{
-  "main": "../dist/cjs/Exit.js",
-  "module": "../dist/esm/Exit.js",
-  "types": "../dist/dts/Exit.d.ts",
-  "sideEffects": []
-}

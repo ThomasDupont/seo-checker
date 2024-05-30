@@ -1,6 +1,0 @@
-{
-  "main": "../dist/cjs/ModuleVersion.js",
-  "module": "../dist/esm/ModuleVersion.js",
-  "types": "../dist/dts/ModuleVersion.d.ts",
-  "sideEffects": []
-}

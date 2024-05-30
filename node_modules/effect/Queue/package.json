@@ -1,6 +1,0 @@
-{
-  "main": "../dist/cjs/Queue.js",
-  "module": "../dist/esm/Queue.js",
-  "types": "../dist/dts/Queue.d.ts",
-  "sideEffects": []
-}

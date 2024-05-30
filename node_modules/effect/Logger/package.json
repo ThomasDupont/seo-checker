@@ -1,6 +1,0 @@
-{
-  "main": "../dist/cjs/Logger.js",
-  "module": "../dist/esm/Logger.js",
-  "types": "../dist/dts/Logger.d.ts",
-  "sideEffects": []
-}

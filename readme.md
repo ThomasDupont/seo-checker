@@ -1,6 +1,6 @@
-# SEO Checker
+# Google Search Console checker (SEOchecker program)
 
-This tool anticipates Google Search Console errors.
+This tool anticipates Google Search Console errors for SEO.
 
 ![image info](./doc/SEO_checker.png)
 
@@ -27,7 +27,7 @@ MIT: use it for free whenever you want, however you want
 
 1) Install Node.js: https://nodejs.org/en/blog/release/v18.12.0
 2) Open a terminal
-3) Run `npm i -g SEOchecker`
+3) Run `npm i -g google-search-console-checker`
 4) Run `SEOchecker --all https://yourwebsite.com`
 
 The tool lists anomalies with clear explanations page by page.

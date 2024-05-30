@@ -1,6 +1,0 @@
-{
-  "main": "../dist/cjs/Trie.js",
-  "module": "../dist/esm/Trie.js",
-  "types": "../dist/dts/Trie.d.ts",
-  "sideEffects": []
-}

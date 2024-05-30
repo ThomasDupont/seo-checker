@@ -1,6 +1,0 @@
-{
-  "main": "../dist/cjs/Take.js",
-  "module": "../dist/esm/Take.js",
-  "types": "../dist/dts/Take.d.ts",
-  "sideEffects": []
-}

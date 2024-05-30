@@ -1,6 +1,0 @@
-{
-  "main": "../dist/cjs/Ref.js",
-  "module": "../dist/esm/Ref.js",
-  "types": "../dist/dts/Ref.d.ts",
-  "sideEffects": []
-}

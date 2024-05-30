@@ -1,6 +1,0 @@
-{
-  "main": "../dist/cjs/ConfigError.js",
-  "module": "../dist/esm/ConfigError.js",
-  "types": "../dist/dts/ConfigError.d.ts",
-  "sideEffects": []
-}

@@ -1,6 +1,0 @@
-{
-  "main": "../dist/cjs/GroupBy.js",
-  "module": "../dist/esm/GroupBy.js",
-  "types": "../dist/dts/GroupBy.d.ts",
-  "sideEffects": []
-}
