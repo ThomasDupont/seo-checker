@@ -1,0 +1,18 @@
+SEO checker - help
+
+Check broken links on a web page or whole website
+Links checked :
+ - image src
+ - canonical link
+ - a href
+
+OPTIONS : 
+
+- --single : check only the page url provided
+- --all : check recursively all page from the page url provided
+- --withExternal : check external link with
+- --help
+- -excludeStatus <statusCode> exclude status response for ckecked link 
+- <url> : The url to check
+
+EXAMPLE : SEOchecker --single -excludeStatus 401,400 https://exemple.com/blog/article-1
