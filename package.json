@@ -1,6 +1,6 @@
 {
   "name": "google-search-console-checker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Anticipate the Google Search Console errors by checking your website for 404 errors, sitemap errors, and more.",
   "license": "MIT",
   "author": "Thomas Dupont",
@@ -21,9 +21,7 @@
     "effect": "^3.2.5",
     "fast-xml-parser": "^4.3.6",
     "node-html-parser": "^6.1.13",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
+    "zod": "^3.23.8",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.8",
     "jest": "^29.7.0",
