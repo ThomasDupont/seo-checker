@@ -6,7 +6,7 @@
   "author": "Thomas Dupont",
   "repository": "https://github.com/ThomasDupont/seo-checker",
   "bin": {
-    "404check": "bin/404check.js"
+    "SEOchecker": "bin/SEOchecker.js"
   },
   "scripts": {
     "build": "tsc --project tsconfig.json && cp src/help.txt lib/help.txt",

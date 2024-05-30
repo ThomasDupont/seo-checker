@@ -25,30 +25,23 @@ export class SitemapTester {
     }
 
     public static async parseSitemap(url: string): Promise<Sitemap | null> {
-        const test1 = await pipe(
-            T.tryPromise(async () => {
-                const xml = await getHtml(url)
-                if (!xml) {
-                    throw new Error('HTML is empty')
-                }
-                const parser = new XMLParser();
-                return parser.parse(xml);
-            }),
-            T.catchAll(_ => {
-                global.setAnomaly(`sitemap.xml is missing on page or not a valid XML ${url}`)
-                return T.succeed(null)
-            }),
-            T.runPromise
-        )
-
-        if (!test1) return null
-
-
         return pipe(
-            T.try(() => sitemap.parse(test1)),
+            T.tryPromise(() => getHtml(url).catch(() => {
+                throw new Error('not_found')
+            })),
+            T.map(xml => {
+                const parser = new XMLParser();
+                const parsedXml = parser.parse(xml);
+                return sitemap.parse(parsedXml);
+            }),
             T.catchAll(e => {
-                global.setAnomaly(`sitemap.xml is not valid on page ${url} : error ${JSON.stringify(e)}`)
-                return T.succeed(null)
+                if (e instanceof Error && ['not_found', 'html_empty'].includes(e.message)) {
+                    global.setAnomaly(`sitemap.xml is missing on page or not a valid XML ${url}`);
+                }
+                else {
+                    global.setAnomaly(`sitemap.xml is not valid on page ${url} : error ${JSON.stringify(e)}`);
+                }
+                return T.succeed(null);
             }),
             T.runPromise
         )
