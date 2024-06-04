@@ -14,9 +14,9 @@ Validation features:
 - Broken links (404, 500, ...)
 - Sitemap validity
 - URL validity in sitemaps
+- Duplicate canonicals
 
 And in the future version:
-- Duplicate canonicals
 - Basic HTML structure issues (duplicate H1, orphan H2, ...)
 
 ## License
