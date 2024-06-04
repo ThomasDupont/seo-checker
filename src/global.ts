@@ -8,6 +8,7 @@ class Global {
   public testedUrls: string[] = []
   public excludedStatus: number[] = []
   public pagesTested: string[] = []
+  public canonicals: string[] = []
   constructor() {}
 
   setUrl(url: string) {
@@ -47,6 +48,13 @@ class Global {
 
   setExcludeStatus(status: string) {
     this.excludedStatus = status.split(',').map(Number)
+  }
+
+  setCanonical(canonical: string, url: string) {
+    if (this.canonicals.includes(canonical)) {
+      this.setAnomaly(`Canonical ${canonical} is duplicated for page ${url}`)
+    }
+    this.canonicals.push(canonical)
   }
 }
 

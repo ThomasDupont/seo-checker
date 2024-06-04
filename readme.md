@@ -32,7 +32,7 @@ MIT: use it for free whenever you want, however you want
 
 The tool lists anomalies with clear explanations page by page.
 
-Example: "robots.txt is missing on website https://yourwebsite.com"
+Example: `robots.txt is missing on website https://yourwebsite.com`
 
 ### Launch Options
 
@@ -50,3 +50,7 @@ EXAMPLE: `SEOchecker --single -excludeStatus 401,400 https://example.com/blog/ar
 Stop the push to production process with SEO issues by including this tool in your CI.
 
 If it finds problems, it will return an exit code 1, and the CI process could be interrupted.
+
+## Autor
+
+Thomas Dupont : https://monformateurindependant.com/trainers/thomas-dupont

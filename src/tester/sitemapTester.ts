@@ -26,14 +26,14 @@ export class SitemapTester {
 
     public static async parseSitemap(url: string): Promise<Sitemap | null> {
         return pipe(
-            T.tryPromise(() => getHtml(url).catch(() => {
-                throw new Error('not_found')
-            })),
-            T.map(xml => {
-                const parser = new XMLParser();
-                const parsedXml = parser.parse(xml);
-                return sitemap.parse(parsedXml);
-            }),
+            T.tryPromise(
+                () => getHtml(url)
+                    .catch(() => {
+                        throw new Error('not_found')
+                    })
+                    .then(xml => new XMLParser().parse(xml))
+                    .then(sitemap.parse)
+            ),
             T.catchAll(e => {
                 if (e instanceof Error && ['not_found', 'html_empty'].includes(e.message)) {
                     global.setAnomaly(`sitemap.xml is missing on page or not a valid XML ${url}`);

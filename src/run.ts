@@ -2,6 +2,7 @@ import { ProgramOtpions } from "./@types/cli.types.js"
 import global from "./global.js"
 import { pageTester } from "./tester/pageTester.js"
 import { siteChecker } from "./tester/siteTester.js"
+import { SitemapTester } from "./tester/sitemapTester.js"
 
 export const run = async (options: ProgramOtpions, url: string) => {
     global.setUrl(url)
@@ -13,6 +14,10 @@ export const run = async (options: ProgramOtpions, url: string) => {
 
     if (options.single) {
         await pageTester(url)
+    }
+
+    if(options.sitemap) {
+        await SitemapTester.testSitemap(url)
     }
 
     if (options.all) {

@@ -10,6 +10,7 @@ OPTIONS :
 
 - --single : check only the page url provided
 - --all : check recursively all page from the page url provided
+- --sitemap : check only website sitemap
 - --withExternal : check external link with
 - --help
 - -excludeStatus <statusCode> exclude status response for ckecked link 

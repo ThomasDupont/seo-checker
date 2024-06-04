@@ -9,6 +9,7 @@ program
   .option('--single')
   .option('--all')
   .option('--help')
+  .option('--sitemap', 'Check sitemap only')
   .option('-excludeStatus <status>', 'Exclude status code')
   .option('--withExternal', 'Check external links', false)
 
@@ -22,8 +23,8 @@ if (options.help) {
     process.exit(0)
 }
 
-if (!options.single && !options.all) {
-    console.log('Please provide an option --single or --all')
+if (!options.single && !options.all && !options.sitemap) {
+    console.log('Please provide an option --single, --all or --sitemap')
     process.exit(1)
 }
 

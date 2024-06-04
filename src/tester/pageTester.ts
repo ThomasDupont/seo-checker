@@ -55,10 +55,11 @@ export const pageTester = async (url: string) => {
         .then(treatResults({links: filteredLinks, url, type: 'Links'}))
 
     if (canonical) {
-        // @feature - check if the canonical is duplicated
         await getRequestStatus(canonical).then((result) => {
             if (result.status !== 200) {
                 global.setAnomaly(`Canonical ${canonical} is broken on page ${url}, status code: ${result.status}`)
+            } else {
+                global.setCanonical(canonical, url)
             }
         }).catch(() => {
             global.setAnomaly(`Canonical ${canonical} is broken on page ${url}`)
