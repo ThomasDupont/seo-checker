@@ -8,13 +8,13 @@ export class SitemapTester {
 
     constructor(private getHtml : (url: string) => Promise<string>) {}
 
-    private extractSitemaps(robotsTxt: string) {
+    private extractSitemaps = (robotsTxt: string) => {
         const sitemapLines = robotsTxt.split('\n').filter(line => line.trim().startsWith('Sitemap:'));
         return sitemapLines.map(line => line.split(' ')[1].trim());
     }
 
-    public async parseRobots(url: string) {
-        return pipe(
+    public parseRobots = (url: string) => 
+        pipe(
             T.tryPromise(() => this.getHtml(url + '/robots.txt')),
             T.map(this.extractSitemaps),
             T.catchAll(_ => {
@@ -23,10 +23,9 @@ export class SitemapTester {
             }),
             T.runPromise
         )
-    }
 
-    public async parseSitemap(url: string): Promise<Sitemap | null> {
-        return pipe(
+    public parseSitemap = (url: string): Promise<Sitemap | null> =>
+        pipe(
             T.tryPromise(
                 () => this.getHtml(url)
                     .catch(() => {
@@ -46,9 +45,8 @@ export class SitemapTester {
             }),
             T.runPromise
         )
-    }
 
-    public async testSitemap(url: string) {
+    public testSitemap = async (url: string) => {
         const sitemap = await this.parseSitemap(url)
         if (!sitemap) return
         if (this.isIndexSitemap(sitemap)) {
@@ -63,11 +61,7 @@ export class SitemapTester {
         })
     }
 
-    public getUrlsInSitemap() {
-        return this.urlsInSitemap
-    }
+    public getUrlsInSitemap = () => this.urlsInSitemap
 
-    private isIndexSitemap(sitemap: Sitemap): sitemap is SitemapIndex {
-        return 'sitemapindex' in sitemap
-    }
+    private isIndexSitemap = (sitemap: Sitemap): sitemap is SitemapIndex => 'sitemapindex' in sitemap
 }
