@@ -9,7 +9,6 @@ class Global {
   public excludedStatus: number[] = []
   public pagesTested: string[] = []
   public canonicals: string[] = []
-  constructor() {}
 
   setUrl(url: string) {
     const { host, protocol } = new URL(url)
@@ -40,10 +39,6 @@ class Global {
 
   isNotTested(url: string) {
     return !this.testedUrls.includes(url)
-  }
-
-  isTested(url: string) {
-    return this.testedUrls.includes(url)
   }
 
   setExcludeStatus(status: string) {

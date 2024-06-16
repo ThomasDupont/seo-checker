@@ -6,6 +6,8 @@ import chalk from 'chalk';
 import { run } from './run';
 
 program
+  .name('SEO-checker')
+  .version('1.0.0')
   .option('--single')
   .option('--all')
   .option('--help')

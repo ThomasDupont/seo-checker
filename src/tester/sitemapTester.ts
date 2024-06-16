@@ -1,20 +1,21 @@
 import { XMLParser } from "fast-xml-parser"
 import { Effect as T, pipe } from "effect"
-import { getHtml } from "../parser/getHtml"
 import { Sitemap, SitemapIndex, sitemap } from "../@types/program.types";
 import global from "../global";
 
 export class SitemapTester {
-    private static urlsInSitemap: string[] = []
+    private urlsInSitemap: string[] = []
 
-    private static extractSitemaps(robotsTxt: string) {
+    constructor(private getHtml : (url: string) => Promise<string>) {}
+
+    private extractSitemaps(robotsTxt: string) {
         const sitemapLines = robotsTxt.split('\n').filter(line => line.trim().startsWith('Sitemap:'));
         return sitemapLines.map(line => line.split(' ')[1].trim());
     }
 
-    public static async parseRobots(url: string) {
+    public async parseRobots(url: string) {
         return pipe(
-            T.tryPromise(() => getHtml(url + '/robots.txt')),
+            T.tryPromise(() => this.getHtml(url + '/robots.txt')),
             T.map(this.extractSitemaps),
             T.catchAll(_ => {
                 global.setAnomaly(`robots.txt is missing on website ${url}`)
@@ -24,10 +25,10 @@ export class SitemapTester {
         )
     }
 
-    public static async parseSitemap(url: string): Promise<Sitemap | null> {
+    public async parseSitemap(url: string): Promise<Sitemap | null> {
         return pipe(
             T.tryPromise(
-                () => getHtml(url)
+                () => this.getHtml(url)
                     .catch(() => {
                         throw new Error('not_found')
                     })
@@ -47,7 +48,7 @@ export class SitemapTester {
         )
     }
 
-    public static async testSitemap(url: string) {
+    public async testSitemap(url: string) {
         const sitemap = await this.parseSitemap(url)
         if (!sitemap) return
         if (this.isIndexSitemap(sitemap)) {
@@ -62,11 +63,11 @@ export class SitemapTester {
         })
     }
 
-    public static getUrlsInSitemap() {
+    public getUrlsInSitemap() {
         return this.urlsInSitemap
     }
 
-    private static isIndexSitemap(sitemap: Sitemap): sitemap is SitemapIndex {
+    private isIndexSitemap(sitemap: Sitemap): sitemap is SitemapIndex {
         return 'sitemapindex' in sitemap
     }
 }
