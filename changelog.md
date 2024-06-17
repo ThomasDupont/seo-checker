@@ -11,3 +11,7 @@
 
 - Correct mistake on website
 - Add duplicate canonical
+
+## 1.0.6
+- Increase test cover
+- Use Regex on link parser
