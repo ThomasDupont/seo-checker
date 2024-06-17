@@ -4,21 +4,20 @@ export type ReturnGetStatusRequest = {
     url: string
 }
 
+const sitemapType = z.object({
+    loc: z.string(),
+    lastmod: z.string().optional()
+})
+
 export const sitemapIndex = z.object({
     sitemapindex: z.object({
-        sitemap: z.array(z.object({
-            loc: z.string(),
-            lastmod: z.string().optional()
-        }))
+        sitemap: z.array(sitemapType).or(sitemapType).transform(s => Array.isArray(s) ? s : [s])
     })
 })
 
 export const sitemapUrlSet = z.object({
     urlset: z.object({
-        url: z.array(z.object({
-            loc: z.string(),
-            lastmod: z.string().optional()
-        }))
+        url: z.array(sitemapType).or(sitemapType).transform(s => Array.isArray(s) ? s : [s])
     })
 })
 

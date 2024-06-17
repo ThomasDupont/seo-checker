@@ -62,4 +62,24 @@ describe('Sitemap tester test', () => {
             done()
         })
     })
+
+    it('Should return result for sitemap index with single sitemap', (done) => {
+        getHtmlMock.mockResolvedValueOnce(fs.readFileSync(path.join(__dirname, '../fixtures/sitemap_index_single.xml'), 'utf-8'))
+        const sitemapTester = new SitemapTester(getHtmlMock)
+        sitemapTester.parseSitemap('https://www.lemonde.fr/sitemap_index.xml').then(result => {
+            expect(getHtmlMock).toHaveBeenCalledWith('https://www.lemonde.fr/sitemap_index.xml')
+            expect(result).toBeDefined()
+            done()
+        })
+    })
+
+    it('Should return a result for sitemap index with single path', (done) => {
+        getHtmlMock.mockResolvedValueOnce(fs.readFileSync(path.join(__dirname, '../fixtures/sitemap_single.xml'), 'utf-8'))
+        const sitemapTester = new SitemapTester(getHtmlMock)
+        sitemapTester.parseSitemap('https://www.lemonde.fr/sitemap.xml').then(result => {
+            expect(getHtmlMock).toHaveBeenCalledWith('https://www.lemonde.fr/sitemap.xml')
+            expect(result).toBeDefined()
+            done()
+        })
+    })
 })

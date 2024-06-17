@@ -15,3 +15,6 @@
 ## 1.0.6
 - Increase test cover
 - Use Regex on link parser
+
+## 1.0.7
+- Single sitemap parse
