@@ -18,7 +18,7 @@ export class ParseHtml {
         const a = this.document.querySelectorAll('a')
         return a.map(a => a.getAttribute('href'))
             .filter((href, i) => {
-                if (!href) {
+                if (href === undefined) {
                     Global.setAnomaly(`href is empty in link ${JSON.stringify(a[i]?.rawAttributes)} on page ${this.href}`)
                     return false
                 }
@@ -30,7 +30,7 @@ export class ParseHtml {
                 if (excludedLinkSuffix.some(excluded => href?.endsWith(excluded))) {
                     return false
                 }
-                return !!href
+                return true
             })
             .filter((href, i, arr) => arr.indexOf(href) === i)
             .filter(href => this.avoidExternal(href!))
@@ -41,15 +41,15 @@ export class ParseHtml {
         const imgs = this.document.querySelectorAll('img')
         return imgs.map(img => img.getAttribute('src'))
             .filter((src, i) => {
-
                 if (!src) {
                     Global.setAnomaly(`src is empty in images ${JSON.stringify(imgs[i]?.rawAttributes)} on page ${this.href}`)
+                    return false
                 }
 
                 if (excludedImagePrefix.some(excluded => src?.startsWith(excluded))) {
                     return false
                 }
-                return !!src
+                return true
             })
             .filter((href, i, arr) => arr.indexOf(href) === i)
             .map(src => this.treatResults(src!))
